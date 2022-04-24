@@ -16,9 +16,11 @@ public class Employee {
     private Long id;
     private String firstName;
 
-    //@JoinColumn(name = "roles", referencedColumnName = "id")
     @ManyToOne
     private Role role;
+
+    @ManyToOne
+    private Department department;
 
     public RoleEnum getRole(){
         return RoleEnum.getRole(role.getId());
