@@ -17,7 +17,7 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping
-    public List<Role> findAll() {
+    public Iterable<Role> findAll() {
         return roleService.findAll();
     }
 }

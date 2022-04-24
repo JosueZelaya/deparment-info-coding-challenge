@@ -25,7 +25,7 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Department>> findAll(){
+    public ResponseEntity<Iterable<Department>> findAll(){
         return new ResponseEntity<>(departmentService.findAllDeparments(), HttpStatus.OK);
     }
 
