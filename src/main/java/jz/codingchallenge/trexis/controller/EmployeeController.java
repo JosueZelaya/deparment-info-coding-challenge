@@ -2,17 +2,16 @@ package jz.codingchallenge.trexis.controller;
 
 import jz.codingchallenge.trexis.entity.Employee;
 import jz.codingchallenge.trexis.processor.EmployeeProcessor;
-import jz.codingchallenge.trexis.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("departments/{departmentId}/employees/")
+@RequestMapping("departments/{departmentId}/employees")
 public class EmployeeController {
 
     @Autowired
@@ -21,6 +20,25 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<Iterable<Employee>> findAll(@PathVariable("departmentId") Long departmentId){
         return new ResponseEntity<>(employeeProcessor.findAll(departmentId), HttpStatus.OK);
+    }
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<Employee> findById(@PathVariable("departmentId") Long departmentId, @PathVariable("employeeId") Long employeeId){
+        Optional<Employee> employee = employeeProcessor.findById(departmentId);
+        if(employee.isPresent()){
+            return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/cost")
+    public ResponseEntity<BigDecimal> getCost(@PathVariable Long departmentId) {
+        return new ResponseEntity<>(employeeProcessor.getCostByDepartment(departmentId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{employeeId}/cost")
+    public ResponseEntity<BigDecimal> getCost(@PathVariable("departmentId") Long departmentId,
+                                              @PathVariable("employeeId") Long employeeId) {
+        return new ResponseEntity<>(employeeProcessor.getCostByEmployee(employeeId), HttpStatus.OK);
     }
 
 }

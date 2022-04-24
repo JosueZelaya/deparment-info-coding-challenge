@@ -24,6 +24,9 @@ public class Employee {
     @ManyToOne
     private Department department;
 
+    @ManyToOne
+    private Employee manager;
+
     /*ID bigint not null,
     FIRST_NAME varchar(30),
     LAST_NAME varchar(30),
