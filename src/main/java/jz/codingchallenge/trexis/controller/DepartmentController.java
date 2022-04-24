@@ -2,7 +2,8 @@ package jz.codingchallenge.trexis.controller;
 
 import jz.codingchallenge.trexis.entity.Department;
 import jz.codingchallenge.trexis.entity.Employee;
-import jz.codingchallenge.trexis.service.DepartmentService;
+import jz.codingchallenge.trexis.processor.DepartmentProcessor;
+import jz.codingchallenge.trexis.processor.EmployeeProcessor;
 import jz.codingchallenge.trexis.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+
 import java.util.Optional;
 
 @RestController
@@ -20,19 +21,19 @@ import java.util.Optional;
 public class DepartmentController {
 
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentProcessor departmentProcessor;
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeProcessor employeeProcessor;
 
     @GetMapping
     public ResponseEntity<Iterable<Department>> findAll(){
-        return new ResponseEntity<>(departmentService.findAllDeparments(), HttpStatus.OK);
+        return new ResponseEntity<>(departmentProcessor.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Department> findBy(@PathVariable Long id){
-        Optional<Department> department = departmentService.findById(id);
+        Optional<Department> department = departmentProcessor.findById(id);
         if(department.isPresent()) {
             return new ResponseEntity<>(department.get(), HttpStatus.OK);
         }
@@ -41,10 +42,7 @@ public class DepartmentController {
 
     @GetMapping("/employees")
     public ResponseEntity<Iterable<Employee>> findAllEmployees(){
-        return new ResponseEntity<>(employeeService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(employeeProcessor.findAll(), HttpStatus.OK);
     }
-
-
-
 
 }

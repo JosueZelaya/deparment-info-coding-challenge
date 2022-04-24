@@ -1,6 +1,7 @@
 package jz.codingchallenge.trexis.controller;
 
 import jz.codingchallenge.trexis.entity.Employee;
+import jz.codingchallenge.trexis.processor.EmployeeProcessor;
 import jz.codingchallenge.trexis.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeProcessor employeeProcessor;
 
     @GetMapping
     public ResponseEntity<Iterable<Employee>> findAll(@PathVariable("departmentId") Long departmentId){
-        return new ResponseEntity<>(employeeService.findAllByDepartment(departmentId), HttpStatus.OK);
+        return new ResponseEntity<>(employeeProcessor.findAll(departmentId), HttpStatus.OK);
     }
 
 }

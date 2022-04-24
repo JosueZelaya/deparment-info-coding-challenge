@@ -1,5 +1,6 @@
 package jz.codingchallenge.trexis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,13 +20,9 @@ public class Employee {
     @ManyToOne
     private Role role;
 
+    @JsonIgnore
     @ManyToOne
     private Department department;
-
-    public RoleEnum getRole(){
-        return RoleEnum.getRole(role.getId());
-    }
-
 
     /*ID bigint not null,
     FIRST_NAME varchar(30),

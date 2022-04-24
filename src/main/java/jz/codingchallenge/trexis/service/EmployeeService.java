@@ -21,7 +21,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Iterable<Employee> findAllByDepartment(Long departmentId) {
+    public Iterable<Employee> findAll(Long departmentId) {
         BooleanExpression inDepartment = qEmployee.department.id.eq(departmentId);
         return employeeRepository.findAll(inDepartment);
     }

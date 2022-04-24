@@ -31,12 +31,14 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public List<Department> findAllDeparments() {
+    public List<Department> findAll() {
         return departmentRepository.findAll();
     }
 
     public Optional<Department> findById(Long id) {
         return departmentRepository.findById(id);
     }
+
+
 
 }
