@@ -13,7 +13,7 @@ Build the project:
 
 The above instruction will download the dependencies and run the integration tests which validate the coding challenge.
 
-The application exposes and API but no user interface.
+The application exposes an API but no user interface.
 
 To run the application:
 ./mvnw spring-boot:run
