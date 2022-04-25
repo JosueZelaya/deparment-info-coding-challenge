@@ -24,8 +24,12 @@ public class Employee {
     @ManyToOne
     private Department department;
 
+    @JsonIgnore
     @ManyToOne
     private Employee manager;
+
+    @ManyToOne
+    private DevelopmentGroup developmentGroup;
 
     /*ID bigint not null,
     FIRST_NAME varchar(30),

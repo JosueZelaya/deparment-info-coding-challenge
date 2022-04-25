@@ -23,7 +23,7 @@ public class EmployeeController {
     }
     @GetMapping("/{employeeId}")
     public ResponseEntity<Employee> findById(@PathVariable("departmentId") Long departmentId, @PathVariable("employeeId") Long employeeId){
-        Optional<Employee> employee = employeeProcessor.findById(departmentId);
+        Optional<Employee> employee = employeeProcessor.findById(employeeId);
         if(employee.isPresent()){
             return new ResponseEntity<>(employee.get(), HttpStatus.OK);
         }
@@ -39,6 +39,12 @@ public class EmployeeController {
     public ResponseEntity<BigDecimal> getCost(@PathVariable("departmentId") Long departmentId,
                                               @PathVariable("employeeId") Long employeeId) {
         return new ResponseEntity<>(employeeProcessor.getCostByEmployee(employeeId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{employeeId}/responsibilityStatus")
+    public ResponseEntity<String> getResponsibilityStatus(@PathVariable("departmentId") Long departmentId,
+                                              @PathVariable("employeeId") Long employeeId) {
+        return new ResponseEntity<>(employeeProcessor.getResponsibilityStatus(employeeId), HttpStatus.OK);
     }
 
 }

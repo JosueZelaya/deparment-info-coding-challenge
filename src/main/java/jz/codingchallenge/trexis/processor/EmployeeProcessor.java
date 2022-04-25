@@ -1,7 +1,11 @@
 package jz.codingchallenge.trexis.processor;
 
 import com.querydsl.jpa.impl.JPAQuery;
+import jz.codingchallenge.trexis.entity.DevelopmentGroup;
 import jz.codingchallenge.trexis.entity.Employee;
+import jz.codingchallenge.trexis.entity.RoleEnum;
+import jz.codingchallenge.trexis.service.DevelopmentGroupManagerService;
+import jz.codingchallenge.trexis.service.DevelopmentGroupService;
 import jz.codingchallenge.trexis.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +22,9 @@ public class EmployeeProcessor {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private DevelopmentGroupManagerService developmentGroupManagerService;
 
     public List<Employee> findAll() {
         return employeeService.findAll();
@@ -52,6 +59,16 @@ public class EmployeeProcessor {
             }
         }
         return cost;
+    }
+
+    public String getResponsibilityStatus(Long employeeId) {
+        List<DevelopmentGroup> developmentGroups = developmentGroupManagerService.findByManager(employeeId);
+        if(developmentGroups.size() > 0) return "enough responsibility";
+        Iterable<Employee> underneathManagers = employeeService.findAll(null, null, RoleEnum.MANAGER.getId(), employeeId);
+        Long numOfUnderneathManagers = StreamSupport.stream(underneathManagers.spliterator(), false).count();
+        if(developmentGroups.size() > 0 && numOfUnderneathManagers > 0) return "enough responsibility";
+        if(numOfUnderneathManagers > 1) return "enough responsibility";
+        return "Too little responsibility";
     }
 
 }

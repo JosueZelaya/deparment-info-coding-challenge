@@ -60,7 +60,10 @@ public class EmployeeService {
         return employeeRepository.findAll(underManager);
     }
 
-
+    public Iterable<Employee> findByDevelopmentGroup(Long developmentGroupId) {
+        BooleanExpression matchDevGroup = qEmployee.developmentGroup.id.eq(developmentGroupId);
+        return employeeRepository.findAll(matchDevGroup);
+    }
 
 
 }
